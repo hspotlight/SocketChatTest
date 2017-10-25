@@ -1,26 +1,26 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+let app = require('express')()
+let http = require('http').Server(app)
+let io = require('socket.io')(http)
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
 });
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
 
   	console.log('a user connected');
 
-  socket.on('chat message', function(msg){
+  socket.on('chat message', (msg) => {
   	console.log('message: '+ msg);
     io.emit('chat message', msg);
   });
   
-  socket.on('disconnect',function(){
+  socket.on('disconnect',() => {
   	console.log('user disconnected');
   	io.emit('disconnect');
   });
 });
 
-http.listen(3000, function(){
+http.listen(3000, () => {
   console.log('listening on *:3000');
 });
